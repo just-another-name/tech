@@ -1,0 +1,28 @@
+# Dependencies
+backend/vendor/
+frontend/node_modules/
+frontend/.vite/
+
+# Laravel
+backend/storage/logs/*.log
+backend/storage/framework/cache/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+backend/bootstrap/cache/*.php
+backend/public/storage
+
+# Build
+frontend/dist/
+
+# Docker
+docker/data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
