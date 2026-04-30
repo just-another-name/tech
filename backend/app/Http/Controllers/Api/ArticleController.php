@@ -9,9 +9,17 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $articles = Article::orderByDesc('created_at')
+        $sortField = $request->get('sort_field', '');
+        $sortOrderRequest = $request->get('sort_order', 'desc');
+        $sortOrder = $sortOrderRequest === 'asc' ? 'asc' : 'desc';
+        $allowedFields = ['id', 'title'];
+        if (!in_array($sortField, $allowedFields)) {
+            $sortField = 'created_at';
+        }
+        
+        $articles = Article::orderBy($sortField, $sortOrder)
             ->get()
             ->map(fn($a) => [
                 'id'         => $a->id,

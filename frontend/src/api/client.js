@@ -15,8 +15,8 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  getArticles: ()             => request('/articles'),
-  getArticle:  (id)           => request(`/articles/${id}`),
-  createArticle: (data)       => request('/articles', { method: 'POST', body: JSON.stringify(data) }),
-  createComment: (id, data)   => request(`/articles/${id}/comment`, { method: 'POST', body: JSON.stringify(data) }),
+  getArticles: (sortField, sortOrder) => request(`/articles?sort_field=${sortField}&sort_order=${sortOrder}`),
+  getArticle:  (id)                   => request(`/articles/${id}`),
+  createArticle: (data)               => request('/articles', { method: 'POST', body: JSON.stringify(data) }),
+  createComment: (id, data)           => request(`/articles/${id}/comments`, { method: 'POST', body: JSON.stringify(data) }),
 }

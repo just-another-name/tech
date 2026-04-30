@@ -88,11 +88,12 @@ export default function ArticleDetail() {
       .finally(() => setLoading(false))
   }, [id])
 
+  if (!article) return <div className="loading">Такой статьи нет</div>
   if (loading) return <div className="loading">Загрузка статьи...</div>
   if (error)   return <div className="loading" style={{ color: '#dc2626' }}>Ошибка: {error}</div>
 
   function handleCommentAdded(comment) {
-    setArticle(a => ({ ...a, comments: [...a.comments, comment] }))
+    setArticle(a => ({ ...a, comments: [...(a.comments || []), comment] }))
   }
 
   return (
@@ -106,13 +107,13 @@ export default function ArticleDetail() {
       </div>
 
       <h2 className="section-title">
-        Комментарии ({article.comment.length})
+        Комментарии ({article.comments.length})
       </h2>
 
-      {article.comment.length === 0 ? (
+      {article.comments.length === 0 ? (
         <p style={{ color: '#94a3b8', marginBottom: '1rem' }}>Комментариев пока нет. Будьте первым!</p>
       ) : (
-        article.comment.map(c => (
+        article.comments.map(c => (
           <div key={c.id} className="comment">
             <div>
               <span className="comment-author">{c.author_name}</span>

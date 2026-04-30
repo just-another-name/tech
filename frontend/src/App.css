@@ -237,6 +237,11 @@ nav {
   background: #4a4a4a;
 }
 
+.btn-sort {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 /* Utility */
 .error-text {
   color: #dc2626;

@@ -16,9 +16,9 @@ class CommentController extends Controller
 
         $data = $request->validate([
             'author_name' => 'required|string|max:100',
-            'text'        => 'required|string',
+            'content'     => 'required|string',
         ]);
-
+        
         $comment = Comment::create([
             'article_id'  => $articleId,
             'author_name' => $data['author_name'],

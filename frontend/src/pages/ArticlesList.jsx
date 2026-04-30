@@ -9,16 +9,58 @@ function formatDate(iso) {
 }
 
 export default function ArticlesList() {
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState([]);
+  const [sortField, setSortField] = useState('created_at');
+  const [sortOrder, setSortOrder] = useState('desc');
 
   useEffect(() => {
-    api.getArticles()
-      .then(setArticles);
+    loadArticles(sortField, sortOrder);
   }, [])
+  
+  const loadArticles = (sortField, sortOrder) => {
+    api.getArticles(sortField, sortOrder)
+      .then(setArticles);
+  }
+  
+  const handleSort = (newField) => {
+    let newOrder = 'asc';
+    if (sortField === newField) {
+      newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortField(newField);
+    setSortOrder(newOrder);
+    loadArticles(newField, newOrder);
+  }
+  
+  const getArrow = (field) => {
+    if (sortField !== field) return '';
+    return sortOrder === 'asc' ? '↑' : '↓';
+  }  
+
+  const getButtonActive = (field) => {
+    return sortField === field ? '' : 'btn-secondary';
+  }  
 
   return (
     <div>
       <h1 className="page-title">Все статьи</h1>
+      
+      <div className="sort-panel">
+        <span className="sort-label">Сортировать по:</span>
+        <button 
+          onClick={() => handleSort('id')}
+          className={`btn-sort btn ${getButtonActive('id')}`}
+        >
+          ID {getArrow('id')}
+        </button>
+        <button 
+          onClick={() => handleSort('title')}
+          className={`btn-sort btn ${getButtonActive('title')}`}
+        >
+          Названию {getArrow('title')}
+        </button>
+      </div>
+      <br/>
 
       {articles.length === 0 ? (
         <div className="empty">
